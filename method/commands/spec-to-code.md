@@ -4,6 +4,8 @@ type: command
 status: active
 scope: site-0
 inputs:
+  - method/ontology/project-evo-method-schema.md
+  - method/rules/minimal-project-evo-rules.md
   - project/spec/**
 outputs:
   - generated/**
@@ -17,16 +19,17 @@ Your task is to generate the implementation from the spec.
 
 ## Read first
 
-Read all files under:
+Read these method-level files first:
+
+```text
+method/ontology/project-evo-method-schema.md
+method/rules/minimal-project-evo-rules.md
+```
+
+Then read all project spec files under:
 
 ```text
 project/spec/**
-```
-
-Also follow:
-
-```text
-method/rules/minimal-project-evo-rules.md
 ```
 
 ## Output location

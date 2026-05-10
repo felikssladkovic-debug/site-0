@@ -15,6 +15,27 @@ It replaces a single Codex prompt with a small set of structured spec and method
 - visible UI: render `Счетчик` and `1`
 - generation command: `method/commands/spec-to-code.md`
 
+## Ontology split
+
+This version separates the reusable method-level ontology from the concrete project instance graph.
+
+```text
+method/ontology/project-evo-method-schema.md
+project/spec/00-meta/site-0-ontology-instance.md
+```
+
+Meaning:
+
+```text
+project-evo-method-schema.md
+  Defines entity types and relation types:
+  Project, Method, Rule, Command, Spec, ImplementationArea, Artifact, AcceptanceCheck, State, Transition...
+
+site-0-ontology-instance.md
+  Instantiates that schema for this concrete minimal project:
+  site-0, site-front, orchestrator, spec-to-code, generated/site-front/**, generated/docker-compose.yaml...
+```
+
 ## How to use with Codex
 
 Run Codex from the root of this package and give it the content of:
@@ -29,4 +50,4 @@ The generated implementation must be written to:
 generated/
 ```
 
-The `project/spec/**` files are the source of truth.
+The `method/**` and `project/spec/**` files are the source of truth.
