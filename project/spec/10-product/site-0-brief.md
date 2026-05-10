@@ -1,36 +1,40 @@
 ---
-id: project.spec.10-product.site-0-brief
-kind: product-brief
-status: ready
-project: site-0
-feature: initial-minimal-site
+id: spec.product.site-0-brief
+type: product-brief
+status: active
+scope: site-0
 ---
 
-# site-0 brief
+# Site-0 Brief
+
+`site-0` is the smallest useful frontend project generated through project-evo-method.
 
 ## Goal
 
-Create the smallest possible runnable web application that proves the `site-front` implementation area can be generated, built, and started through Docker Compose.
+Generate a minimal website page that proves the `spec->code` flow works.
 
 ## User-visible behavior
 
-The application renders one page.
+The page must visibly display:
 
-The page must visibly contain:
-
-- the Russian text `Счетчик`
-- the number `1`
+```text
+Счетчик
+1
+```
 
 ## Non-goals
 
-Do not implement:
+This project must not implement:
 
-- counter increment/decrement behavior
-- persistence
+- real counter state changes
 - backend API
-- admin UI
-- routing
-- authentication
-- localization system
 - database
-- tests unless they are required by the generator's default scaffolding
+- authentication
+- admin panel
+- routing
+- i18n
+- persistence
+
+## Success
+
+The generated project is successful when it can be started with Docker Compose and the page displays the required static content.

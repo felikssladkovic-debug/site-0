@@ -1,52 +1,75 @@
 ---
 id: method.rules.minimal-project-evo-rules
-kind: rule
-status: ready
-scope: minimal-site-0
+type: method-rule
+status: active
+scope: site-0
 ---
 
-# Minimal project-evo rules for site-0
+# Minimal Project Evo Rules
+
+This file defines the minimal method rules for the `site-0` case.
 
 ## 1. Source of truth
 
-The source of truth is the spec under `project/spec/**`.
+The source of truth is:
 
-The generated code must not introduce functionality, implementation areas, services, databases, APIs, or UI screens that are not requested by the spec.
+```text
+project/spec/**
+```
 
-## 2. Implementation area boundary
+The generated code must be derived from these spec files.
 
-The only implementation area in this package is:
-
-- `site-front`
-
-No backend, admin UI, ETL, database, queue, auth, or orchestrator must be created.
-
-## 3. Output location
+## 2. Generated output
 
 All generated implementation files must be placed under:
 
-- `generated/`
-
-The `method/` and `project/spec/` folders must remain documentation/specification inputs and must not be modified unless the user explicitly requests spec changes.
-
-## 4. Runtime contract
-
-The project must be runnable with Docker Compose from `generated/`:
-
-```bash
-docker-compose up --build
+```text
+generated/
 ```
 
-After startup, the frontend must be available from the host machine in a browser.
+Do not write generated application files outside `generated/`.
 
-## 5. Keep the solution minimal
+## 3. Minimal implementation areas
 
-Use the requested stack only:
+This case has exactly two implementation areas:
 
-- TypeScript
-- Vue 3
-- Tailwind CSS
-- Vite
-- Docker Compose
+```yaml
+implementation_areas:
+  - id: site-front
+    kind: application
+  - id: orchestrator
+    kind: infrastructure
+```
 
-Prefer the simplest working structure. Do not add routing, state-management libraries, backend mocks, databases, authentication, component libraries, or deployment-specific infrastructure.
+No backend, admin UI, database, ETL, auth, or i18n implementation area is part of this case.
+
+## 4. Command model
+
+This minimal case has exactly one command:
+
+```text
+spec->code
+```
+
+The command reads the spec and produces generated code.
+
+## 5. No feature lifecycle
+
+This minimal case does not include:
+
+- idea inbox
+- feature refinement
+- multi-step feature lifecycle
+- spec-to-idea validation
+- code-to-spec validation
+
+Those concepts are intentionally excluded from this package.
+
+## 6. Acceptance
+
+The generated project is accepted when:
+
+- Docker Compose build succeeds
+- Docker Compose starts the frontend service
+- the browser-visible page renders `Счетчик`
+- the browser-visible page renders `1`

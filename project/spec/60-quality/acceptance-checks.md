@@ -1,42 +1,76 @@
 ---
-id: project.spec.60-quality.acceptance-checks
-kind: quality-spec
-status: ready
-project: site-0
+id: spec.quality.acceptance-checks
+type: quality-spec
+status: active
+scope: site-0
 ---
 
-# Acceptance checks
+# Acceptance Checks
 
-The generated code is accepted when all checks pass.
+The generated implementation is accepted when all checks below pass.
 
-## File checks
+## Check 1: Generated files exist
 
-- `generated/docker-compose.yml` exists.
-- `generated/site-front/package.json` exists.
-- `generated/site-front/src/App.vue` exists.
-- No backend, database, admin, ETL, or orchestrator folders are created.
-
-## Runtime checks
-
-From `generated/`:
-
-```bash
-docker-compose config
-docker-compose build
-docker-compose up -d
-```
-
-Then open:
+Expected files:
 
 ```text
-http://localhost:5173
+generated/site-front/package.json
+generated/site-front/index.html
+generated/site-front/vite.config.ts
+generated/site-front/src/main.ts
+generated/site-front/src/App.vue
+generated/site-front/Dockerfile
+generated/docker-compose.yaml
 ```
 
-The page must visibly display:
+## Check 2: Docker Compose build succeeds
 
-- `Счетчик`
-- `1`
+Command:
 
-## Minimality checks
+```bash
+cd generated
+docker-compose build
+```
 
-The generated solution must not include features outside the spec.
+Expected result:
+
+```text
+build succeeds
+```
+
+## Check 3: Docker Compose starts the app
+
+Command:
+
+```bash
+cd generated
+docker-compose up --build
+```
+
+Expected result:
+
+```text
+site-front service starts
+frontend is reachable from host browser
+```
+
+## Check 4: Page renders required static content
+
+The page must visibly contain:
+
+```text
+Счетчик
+1
+```
+
+## Check 5: No extra implementation areas
+
+The generated project must not include:
+
+```text
+backend
+admin frontend
+database
+ETL
+auth service
+```

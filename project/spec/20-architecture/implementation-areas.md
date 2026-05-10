@@ -1,32 +1,92 @@
 ---
-id: project.spec.20-architecture.implementation-areas
-kind: architecture-spec
-status: ready
-project: site-0
+id: spec.architecture.implementation-areas
+type: architecture-spec
+status: active
+scope: site-0
 ---
 
-# Implementation areas
+# Implementation Areas
 
-## Allowed implementation areas
+This minimal case has exactly two implementation areas.
 
-There is exactly one implementation area:
+## 1. site-front
 
-| impl-area | Required | Description |
-|---|---:|---|
-| `site-front` | yes | Public site frontend implemented with Vue 3, TypeScript, Tailwind CSS, and Vite. |
+```yaml
+id: site-front
+kind: application
+type: frontend
+responsibility: render the minimal user-visible page
+owns:
+  - generated/site-front/**
+```
 
-## Forbidden implementation areas
+Technology stack:
 
-The generated code must not create these or any similar implementation areas:
+```yaml
+stack:
+  - TypeScript
+  - Vue 3
+  - Tailwind
+  - Vite
+```
 
-- `site-backend`
-- `admin-front`
-- `admin-backend`
-- `etl`
-- `db-canonical`
-- `db-read`
-- `start-orchestrator`
+Required behavior:
 
-## Connections
+```yaml
+behavior:
+  - render "Счетчик"
+  - render "1"
+```
 
-There are no inter-area connections because there is only one implementation area.
+## 2. orchestrator
+
+```yaml
+id: orchestrator
+kind: infrastructure
+type: docker-compose-runtime
+responsibility: build and run site-front through Docker Compose
+owns:
+  - generated/docker-compose.yaml
+```
+
+Technology stack:
+
+```yaml
+stack:
+  - Docker
+  - Docker Compose
+```
+
+Required behavior:
+
+```yaml
+behavior:
+  - build site-front container
+  - run site-front container
+  - expose frontend to host browser
+```
+
+## Relations
+
+```yaml
+relations:
+  - from: orchestrator
+    to: site-front
+    relation: builds
+
+  - from: orchestrator
+    to: site-front
+    relation: runs
+```
+
+## Explicitly absent implementation areas
+
+```yaml
+not_used:
+  - site-backend
+  - admin-front
+  - admin-backend
+  - db-canonical
+  - db-read
+  - etl
+```
