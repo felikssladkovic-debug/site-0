@@ -1,5 +1,5 @@
 ---
-id: spec.orchestrator.contract
+id: project.spec.site-0.orchestrator-contract
 type: impl-area-contract
 status: active
 scope: site-0
@@ -8,78 +8,59 @@ impl_area: orchestrator
 
 # Orchestrator Contract
 
+This file defines the contract for the `orchestrator` implementation area.
+
 ## Responsibility
 
-`orchestrator` is the infrastructure implementation area for this minimal project.
+`orchestrator` must build and run the generated project through Docker Compose.
 
-It owns:
+## Owned artifacts
 
-```text
-generated/docker-compose.yaml
+```yaml
+owns:
+  - generated/docker-compose.yaml
 ```
 
-It may also rely on a frontend Dockerfile owned by `site-front`:
+## Required runtime command
 
-```text
-generated/site-front/Dockerfile
-```
-
-## Runtime contract
-
-The whole generated project must run with:
+The project must be runnable with:
 
 ```bash
-cd generated
 docker-compose up --build
 ```
 
-## Docker Compose contract
+## Required service
 
-`generated/docker-compose.yaml` must define one service for `site-front`.
+Docker Compose must define a service for the frontend application.
 
 Recommended service name:
 
 ```yaml
-services:
-  site-front:
+service_name: site-front
 ```
 
-The service must:
+## Relation to site-front
 
-- build the frontend container
-- run the Vite dev server or an equivalent frontend server
-- expose the frontend to the host browser
-
-Recommended port mapping:
-
-```yaml
-ports:
-  - "5173:5173"
-```
-
-## Dependency on site-front
-
-The `orchestrator` implementation area depends on the `site-front` implementation area.
+`orchestrator` runs and builds `site-front`.
 
 ```yaml
 relations:
   - from: orchestrator
     to: site-front
-    relation: builds
+    relation: runs
 
   - from: orchestrator
     to: site-front
-    relation: runs
+    relation: builds
 ```
 
-## Constraints
+## Not required
 
-Do not add services for:
+Do not define services for:
 
 - backend
 - database
 - admin UI
-- ETL
-- auth
-- message broker
+- queue
 - cache
+- ETL

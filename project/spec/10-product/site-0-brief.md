@@ -1,5 +1,5 @@
 ---
-id: spec.product.site-0-brief
+id: project.spec.site-0.brief
 type: product-brief
 status: active
 scope: site-0
@@ -7,34 +7,37 @@ scope: site-0
 
 # Site-0 Brief
 
-`site-0` is the smallest useful frontend project generated through project-evo-method.
+`site-0` is a minimal frontend-only project.
 
-## Goal
+Its purpose is to validate the smallest useful `project-evo-method` flow:
 
-Generate a minimal website page that proves the `spec->code` flow works.
+```text
+spec -> code
+```
 
-## User-visible behavior
+## Product requirement
 
-The page must visibly display:
+The generated application must show a simple page with:
 
 ```text
 Счетчик
 1
 ```
 
+The number `1` is static.
+
+There is no real counter behavior yet.
+
 ## Non-goals
 
-This project must not implement:
+The project must not include:
 
-- real counter state changes
-- backend API
+- backend
 - database
 - authentication
-- admin panel
+- authorization
+- admin UI
 - routing
 - i18n
 - persistence
-
-## Success
-
-The generated project is successful when it can be started with Docker Compose and the page displays the required static content.
+- mutable counter logic

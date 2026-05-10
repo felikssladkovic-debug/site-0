@@ -1,5 +1,5 @@
 ---
-id: spec.site-front.contract
+id: project.spec.site-0.site-front-contract
 type: impl-area-contract
 status: active
 scope: site-0
@@ -8,61 +8,62 @@ impl_area: site-front
 
 # Site Front Contract
 
+This file defines the contract for the `site-front` implementation area.
+
 ## Responsibility
 
-`site-front` is the application implementation area for the minimal frontend.
-
-It owns:
-
-```text
-generated/site-front/**
-```
+`site-front` must render the minimal frontend page for `site-0`.
 
 ## Stack
 
 Use:
 
-- TypeScript
-- Vue 3
-- Tailwind
-- Vite
-
-## Required files
-
-The generated implementation should include at least:
-
-```text
-generated/site-front/package.json
-generated/site-front/index.html
-generated/site-front/vite.config.ts
-generated/site-front/tsconfig.json
-generated/site-front/src/main.ts
-generated/site-front/src/App.vue
-generated/site-front/src/style.css
-generated/site-front/Dockerfile
+```yaml
+stack:
+  - TypeScript
+  - Vue 3
+  - Tailwind
+  - Vite
 ```
 
-Additional config files are allowed only when needed for the required stack.
+## Owned artifacts
 
-## UI contract
+```yaml
+owns:
+  - generated/site-front/**
+```
 
-The page must display:
+Expected files include:
+
+```text
+generated/site-front/
+  package.json
+  index.html
+  vite.config.ts
+  tsconfig.json
+  tailwind.config.*
+  postcss.config.*
+  src/**
+  Dockerfile
+```
+
+## Required UI behavior
+
+The rendered page must display:
 
 ```text
 Счетчик
 1
 ```
 
-## Behavior constraints
-
-The counter value is static.
+## Not required
 
 Do not implement:
 
 - increment button
 - decrement button
-- mutable counter state
+- mutable state
 - API calls
-- persistence
 - routing
-- global state management
+- i18n
+- persistence

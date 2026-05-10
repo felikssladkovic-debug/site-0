@@ -1,5 +1,5 @@
 ---
-id: spec.meta.site-0-ontology-instance
+id: project.spec.site-0.ontology-instance
 type: ontology-instance
 status: active
 scope: site-0
@@ -8,145 +8,113 @@ conforms_to: method.ontology.project-evo-method-schema
 
 # Site-0 Ontology Instance
 
-This document describes the concrete `site-0` instance graph that conforms to the method-level schema:
+This file is the concrete method graph for `site-0`.
+
+It instantiates the reusable entity types and relation types from:
 
 ```text
 method/ontology/project-evo-method-schema.md
 ```
 
-It does not define the general project-evo-method ontology. It instantiates it for this minimal case.
-
----
-
-# 1. Instance Scope
-
-`site-0` is a minimal generated software project with:
-
-```yaml
-scope:
-  project: site-0
-  implementation_areas:
-    - site-front
-    - orchestrator
-  command:
-    - spec-to-code
-  output_root: generated/
-  primary_visible_behavior: render-counter-static-value
-```
-
----
-
-# 2. Entity Instances
+## 1. Instances
 
 ```yaml
 instances:
   - id: site-0
     type: Project
-    name: site-0
-    purpose: minimal Vue site generated from spec
 
   - id: project-evo-method-minimal
     type: Method
-    scope: site-0 minimal project-evo workflow
 
-  - id: project-evo-method-schema
-    type: method-ontology-schema
-    path: method/ontology/project-evo-method-schema.md
-
-  - id: minimal-project-evo-rules
+  - id: method.rules.impl-area-rule
     type: Rule
-    path: method/rules/minimal-project-evo-rules.md
 
-  - id: spec-to-code
-    type: Command
-    path: method/commands/spec-to-code.md
-    input: project/spec/**
-    output: generated/**
+  - id: method.rules.spec-to-code-rule
+    type: Rule
 
-  - id: site-0-spec
+  - id: method.rules.acceptance-check-rule
+    type: Rule
+
+  - id: method.command-schemas.spec-to-code-command-schema
+    type: CommandSchema
+
+  - id: project.method-instance.commands.spec-to-code.site-0
+    type: CommandInstance
+
+  - id: project-spec
     type: Spec
-    root: project/spec/
+    path: project/spec/**
 
   - id: spec-index
     type: SpecFile
     path: project/spec/00-meta/spec-index.md
-    role: spec index
-
-  - id: site-0-ontology-instance
-    type: SpecFile
-    path: project/spec/00-meta/site-0-ontology-instance.md
-    role: concrete ontology instance graph
 
   - id: site-0-brief
     type: SpecFile
     path: project/spec/10-product/site-0-brief.md
-    role: product brief
 
-  - id: implementation-areas
+  - id: implementation-areas-spec
     type: SpecFile
     path: project/spec/20-architecture/implementation-areas.md
-    role: implementation area map
 
   - id: site-front-contract
     type: SpecFile
     path: project/spec/30-site-front/site-front-contract.md
-    role: site-front contract
 
   - id: orchestrator-contract
     type: SpecFile
     path: project/spec/40-orchestrator/orchestrator-contract.md
-    role: orchestrator contract
 
-  - id: acceptance-checks
+  - id: acceptance-checks-spec
     type: SpecFile
     path: project/spec/60-quality/acceptance-checks.md
-    role: acceptance checks
 
   - id: site-front
     type: ImplementationArea
     kind: application
-    responsibility: render the minimal visible frontend page
 
   - id: orchestrator
     type: ImplementationArea
     kind: infrastructure
-    responsibility: build and run the generated application through Docker Compose
 
   - id: generated-code
     type: GeneratedCode
-    root: generated/
-    produced_by: spec-to-code
+    path: generated/**
 
   - id: generated-site-front
     type: Artifact
     path: generated/site-front/**
-    generated: true
 
   - id: generated-docker-compose
     type: Artifact
     path: generated/docker-compose.yaml
-    generated: true
 
   - id: render-counter-static-value
     type: Behavior
-    description: page renders the text "Счетчик" and the number "1"
 
   - id: app-builds
     type: AcceptanceCheck
-    description: docker-compose build succeeds
 
   - id: app-runs
     type: AcceptanceCheck
-    description: docker-compose up starts the frontend service
 
   - id: page-renders-counter
     type: AcceptanceCheck
-    description: the page displays "Счетчик" and "1"
+
+  - id: spec-defined
+    type: State
+
+  - id: code-generated
+    type: State
+
+  - id: runnable
+    type: State
+
+  - id: accepted
+    type: State
 ```
 
----
-
-# 3. Concrete Relations
+## 2. Relations
 
 ```yaml
 relations:
@@ -155,48 +123,48 @@ relations:
     object: project-evo-method-minimal
 
   - subject: project-evo-method-minimal
-    predicate: defines_schema
-    object: project-evo-method-schema
+    predicate: defines_rule
+    object: method.rules.impl-area-rule
 
   - subject: project-evo-method-minimal
     predicate: defines_rule
-    object: minimal-project-evo-rules
+    object: method.rules.spec-to-code-rule
 
   - subject: project-evo-method-minimal
-    predicate: defines_command
-    object: spec-to-code
+    predicate: defines_rule
+    object: method.rules.acceptance-check-rule
+
+  - subject: project-evo-method-minimal
+    predicate: defines_command_schema
+    object: method.command-schemas.spec-to-code-command-schema
 
   - subject: site-0
     predicate: has_spec
-    object: site-0-spec
+    object: project-spec
 
-  - subject: site-0-spec
-    predicate: contains_spec_file
+  - subject: project-spec
+    predicate: contains
     object: spec-index
 
-  - subject: site-0-spec
-    predicate: contains_spec_file
-    object: site-0-ontology-instance
-
-  - subject: site-0-spec
-    predicate: contains_spec_file
+  - subject: project-spec
+    predicate: contains
     object: site-0-brief
 
-  - subject: site-0-spec
-    predicate: contains_spec_file
-    object: implementation-areas
+  - subject: project-spec
+    predicate: contains
+    object: implementation-areas-spec
 
-  - subject: site-0-spec
-    predicate: contains_spec_file
+  - subject: project-spec
+    predicate: contains
     object: site-front-contract
 
-  - subject: site-0-spec
-    predicate: contains_spec_file
+  - subject: project-spec
+    predicate: contains
     object: orchestrator-contract
 
-  - subject: site-0-spec
-    predicate: contains_spec_file
-    object: acceptance-checks
+  - subject: project-spec
+    predicate: contains
+    object: acceptance-checks-spec
 
   - subject: site-0
     predicate: has_impl_area
@@ -215,126 +183,91 @@ relations:
     object: generated-docker-compose
 
   - subject: orchestrator
-    predicate: runs
-    object: site-front
-
-  - subject: orchestrator
-    predicate: builds
-    object: site-front
-
-  - subject: orchestrator
     predicate: depends_on
     object: site-front
 
-  - subject: spec-to-code
+  - subject: project.method-instance.commands.spec-to-code.site-0
+    predicate: instantiates
+    object: method.command-schemas.spec-to-code-command-schema
+
+  - subject: project.method-instance.commands.spec-to-code.site-0
     predicate: reads
-    object: site-0-spec
+    object: project-spec
 
-  - subject: spec-to-code
+  - subject: project.method-instance.commands.spec-to-code.site-0
     predicate: follows_rule
-    object: minimal-project-evo-rules
+    object: method.rules.impl-area-rule
 
-  - subject: spec-to-code
+  - subject: project.method-instance.commands.spec-to-code.site-0
+    predicate: follows_rule
+    object: method.rules.spec-to-code-rule
+
+  - subject: project.method-instance.commands.spec-to-code.site-0
+    predicate: follows_rule
+    object: method.rules.acceptance-check-rule
+
+  - subject: project.method-instance.commands.spec-to-code.site-0
     predicate: generates
     object: generated-code
 
   - subject: generated-code
-    predicate: includes_artifact
+    predicate: contains
     object: generated-site-front
 
   - subject: generated-code
-    predicate: includes_artifact
+    predicate: contains
     object: generated-docker-compose
 
   - subject: site-front
-    predicate: provides_behavior
+    predicate: provides
     object: render-counter-static-value
 
   - subject: app-builds
     predicate: validates
-    object: generated-docker-compose
+    object: generated-code
 
   - subject: app-runs
     predicate: validates
-    object: generated-code
+    object: generated-docker-compose
 
   - subject: page-renders-counter
     predicate: validates
     object: render-counter-static-value
 ```
 
----
-
-# 4. Workflow Instance
-
-```yaml
-workflow:
-  - id: site-0-spec-to-code-flow
-    from: site-0-spec
-    command: spec-to-code
-    to: generated-code
-```
-
----
-
-# 5. State Instance
+## 3. Workflow states
 
 ```yaml
 states:
   - id: spec-defined
-    meaning: minimal spec files exist and define site-0
+    meaning: project specs and method instance exist
 
   - id: code-generated
-    meaning: generated/ contains implementation produced from spec
+    meaning: generated/ contains code produced from specs
 
   - id: runnable
-    meaning: docker-compose up --build starts the application
+    meaning: generated project starts with Docker Compose
 
   - id: accepted
     meaning: acceptance checks pass
 ```
 
+## 4. Transitions
+
 ```yaml
 transitions:
-  - id: generate-code-from-spec
+  - id: generate-code
     from: spec-defined
     to: code-generated
-    triggered_by: spec-to-code
+    triggered_by: project.method-instance.commands.spec-to-code.site-0
 
-  - id: run-generated-code
+  - id: run-project
     from: code-generated
     to: runnable
-    triggered_by: docker-compose up --build succeeds
+    condition: docker-compose up --build succeeds
 
-  - id: accept-generated-code
+  - id: accept-project
     from: runnable
     to: accepted
-    triggered_by: acceptance checks pass
-```
-
----
-
-# 6. Instance Boundary
-
-Explicitly absent from this site-0 instance:
-
-```yaml
-not_used:
-  implementation_areas:
-    - site-backend
-    - admin-front
-    - admin-backend
-    - db-canonical
-    - db-read
-    - etl
-
-  product_capabilities:
-    - real counter mutation
-    - backend API
-    - persistence
-    - authentication
-    - authorization
-    - admin UI
-    - i18n
-    - routing
+    condition: acceptance checks pass
 ```

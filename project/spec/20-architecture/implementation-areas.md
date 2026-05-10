@@ -1,5 +1,5 @@
 ---
-id: spec.architecture.implementation-areas
+id: project.spec.site-0.implementation-areas
 type: architecture-spec
 status: active
 scope: site-0
@@ -7,22 +7,16 @@ scope: site-0
 
 # Implementation Areas
 
-This minimal case has exactly two implementation areas.
+`site-0` has exactly two implementation areas.
 
 ## 1. site-front
 
 ```yaml
 id: site-front
 kind: application
-type: frontend
-responsibility: render the minimal user-visible page
+responsibility: Render the minimal visible frontend page.
 owns:
   - generated/site-front/**
-```
-
-Technology stack:
-
-```yaml
 stack:
   - TypeScript
   - Vue 3
@@ -30,40 +24,17 @@ stack:
   - Vite
 ```
 
-Required behavior:
-
-```yaml
-behavior:
-  - render "Счетчик"
-  - render "1"
-```
-
 ## 2. orchestrator
 
 ```yaml
 id: orchestrator
 kind: infrastructure
-type: docker-compose-runtime
-responsibility: build and run site-front through Docker Compose
+responsibility: Build and run the generated project through Docker Compose.
 owns:
   - generated/docker-compose.yaml
-```
-
-Technology stack:
-
-```yaml
 stack:
   - Docker
   - Docker Compose
-```
-
-Required behavior:
-
-```yaml
-behavior:
-  - build site-front container
-  - run site-front container
-  - expose frontend to host browser
 ```
 
 ## Relations
@@ -72,17 +43,19 @@ behavior:
 relations:
   - from: orchestrator
     to: site-front
-    relation: builds
+    relation: runs
+    via: docker-compose service
 
   - from: orchestrator
     to: site-front
-    relation: runs
+    relation: builds
+    via: Dockerfile or Docker Compose build context
 ```
 
-## Explicitly absent implementation areas
+## Forbidden implementation areas
 
 ```yaml
-not_used:
+forbidden_impl_areas:
   - site-backend
   - admin-front
   - admin-backend

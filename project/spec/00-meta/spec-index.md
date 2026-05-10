@@ -1,66 +1,58 @@
 ---
-id: spec.meta.index
+id: project.spec.site-0.index
 type: spec-index
 status: active
 scope: site-0
 ---
 
-# Spec Index
+# Site-0 Spec Index
 
-This is the source-of-truth spec set for the minimal `site-0` project.
+This index lists the minimal project specs for `site-0`.
 
-## Method-level files
+## Spec files
 
-```text
-method/ontology/project-evo-method-schema.md
-method/rules/minimal-project-evo-rules.md
-method/commands/spec-to-code.md
+```yaml
+spec_files:
+  - id: project.spec.site-0.ontology-instance
+    path: project/spec/00-meta/site-0-ontology-instance.md
+    role: concrete method graph for this project
+
+  - id: project.spec.site-0.brief
+    path: project/spec/10-product/site-0-brief.md
+    role: product brief
+
+  - id: project.spec.site-0.implementation-areas
+    path: project/spec/20-architecture/implementation-areas.md
+    role: implementation area map
+
+  - id: project.spec.site-0.site-front-contract
+    path: project/spec/30-site-front/site-front-contract.md
+    role: contract for site-front implementation area
+
+  - id: project.spec.site-0.orchestrator-contract
+    path: project/spec/40-orchestrator/orchestrator-contract.md
+    role: contract for orchestrator implementation area
+
+  - id: project.spec.site-0.acceptance-checks
+    path: project/spec/60-quality/acceptance-checks.md
+    role: acceptance checks
 ```
 
-## Project spec files
+## Method files used by this project
 
-```text
-project/spec/00-meta/spec-index.md
-project/spec/00-meta/site-0-ontology-instance.md
-project/spec/10-product/site-0-brief.md
-project/spec/20-architecture/implementation-areas.md
-project/spec/30-site-front/site-front-contract.md
-project/spec/40-orchestrator/orchestrator-contract.md
-project/spec/60-quality/acceptance-checks.md
+```yaml
+method_files:
+  - path: method/ontology/project-evo-method-schema.md
+  - path: method/rules/impl-area-rule.md
+  - path: method/rules/spec-to-code-rule.md
+  - path: method/rules/acceptance-check-rule.md
+  - path: method/command-schemas/spec-to-code-command-schema.md
 ```
 
-## Ontology relation
+## Project method instance files
 
-```text
-method/ontology/project-evo-method-schema.md
-  -> defines reusable project-evo-method entity and relation types
-
-project/spec/00-meta/site-0-ontology-instance.md
-  -> instantiates the method schema for site-0
-```
-
-## Method command
-
-The only command needed for this case is:
-
-```text
-method/commands/spec-to-code.md
-```
-
-## Main transformation
-
-```text
-spec -> code
-```
-
-Input:
-
-```text
-project/spec/**
-```
-
-Output:
-
-```text
-generated/**
+```yaml
+project_method_instance_files:
+  - path: project/method-instance/rules-profile.md
+  - path: project/method-instance/commands/spec-to-code.site-0.md
 ```

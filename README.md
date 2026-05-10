@@ -1,53 +1,86 @@
+---
+id: readme.site-0-project-evo-spec-method-instance
+type: readme
+status: active
+scope: site-0
+---
+
 # site-0 project-evo spec package
 
-This package is the minimal `project-evo-method` decomposition for `site-0`.
+This package is a minimal `project-evo-method` application for the `site-0` case.
 
-It replaces a single Codex prompt with a small set of structured spec and method files.
+It separates:
 
-## Scope
+1. reusable method-level definitions under `method/`
+2. project-specific method application under `project/method-instance/`
+3. project-specific specs under `project/spec/`
+4. generated code output target under `generated/`
 
-`site-0` is intentionally minimal:
+The package intentionally contains only the concepts needed for the minimal `site-0` project.
 
-- application implementation area: `site-front`
-- infrastructure implementation area: `orchestrator`
-- frontend stack: TypeScript, Vue 3, Tailwind, Vite
-- runtime/build: Docker Compose
-- visible UI: render `Счетчик` and `1`
-- generation command: `method/commands/spec-to-code.md`
+## Case summary
 
-## Ontology split
+`site-0` is a minimal frontend-only web application.
 
-This version separates the reusable method-level ontology from the concrete project instance graph.
+It must:
 
-```text
-method/ontology/project-evo-method-schema.md
-project/spec/00-meta/site-0-ontology-instance.md
-```
+- use TypeScript
+- use Vue 3
+- use Tailwind
+- use Vite
+- run through Docker Compose
+- display the text `Счетчик`
+- display the static number `1`
 
-Meaning:
+The project has exactly two implementation areas:
 
-```text
-project-evo-method-schema.md
-  Defines entity types and relation types:
-  Project, Method, Rule, Command, Spec, ImplementationArea, Artifact, AcceptanceCheck, State, Transition...
+- `site-front` — application implementation area
+- `orchestrator` — infrastructure implementation area that owns Docker Compose runtime artifacts
 
-site-0-ontology-instance.md
-  Instantiates that schema for this concrete minimal project:
-  site-0, site-front, orchestrator, spec-to-code, generated/site-front/**, generated/docker-compose.yaml...
-```
+## Main command to execute
 
-## How to use with Codex
-
-Run Codex from the root of this package and give it the content of:
+Run the project-specific command:
 
 ```text
-method/commands/spec-to-code.md
+project/method-instance/commands/spec-to-code.site-0.md
 ```
 
-The generated implementation must be written to:
+This command applies the reusable method-level `spec-to-code` command schema to this concrete `site-0` project instance.
+
+## Expected generated output
+
+The code generation agent must create output under:
 
 ```text
 generated/
 ```
 
-The `method/**` and `project/spec/**` files are the source of truth.
+Expected generated structure:
+
+```text
+generated/
+  site-front/
+    package.json
+    index.html
+    vite.config.ts
+    tsconfig.json
+    tailwind.config.*
+    postcss.config.*
+    src/**
+    Dockerfile
+  docker-compose.yaml
+```
+
+## Runtime command
+
+```bash
+docker-compose up --build
+```
+
+## Acceptance checks
+
+The generated project is accepted when:
+
+1. Docker Compose build succeeds.
+2. Docker Compose starts the frontend service.
+3. The page displays `Счетчик` and `1`.

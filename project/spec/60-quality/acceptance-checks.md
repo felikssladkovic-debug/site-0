@@ -1,5 +1,5 @@
 ---
-id: spec.quality.acceptance-checks
+id: project.spec.site-0.acceptance-checks
 type: quality-spec
 status: active
 scope: site-0
@@ -7,70 +7,49 @@ scope: site-0
 
 # Acceptance Checks
 
-The generated implementation is accepted when all checks below pass.
+The generated `site-0` project is accepted when all checks below pass.
 
-## Check 1: Generated files exist
+## Check 1: app-builds
 
-Expected files:
-
-```text
-generated/site-front/package.json
-generated/site-front/index.html
-generated/site-front/vite.config.ts
-generated/site-front/src/main.ts
-generated/site-front/src/App.vue
-generated/site-front/Dockerfile
-generated/docker-compose.yaml
+```yaml
+id: app-builds
+description: Docker Compose build succeeds.
+validates:
+  - generated/**
 ```
 
-## Check 2: Docker Compose build succeeds
-
-Command:
+Expected command:
 
 ```bash
-cd generated
-docker-compose build
-```
-
-Expected result:
-
-```text
-build succeeds
-```
-
-## Check 3: Docker Compose starts the app
-
-Command:
-
-```bash
-cd generated
 docker-compose up --build
 ```
 
-Expected result:
+Build must not fail.
 
-```text
-site-front service starts
-frontend is reachable from host browser
+## Check 2: app-runs
+
+```yaml
+id: app-runs
+description: Docker Compose starts the frontend service.
+validates:
+  - generated/docker-compose.yaml
+  - generated/site-front/**
 ```
 
-## Check 4: Page renders required static content
+The frontend service must start and expose the application in a browser-accessible way.
 
-The page must visibly contain:
+## Check 3: page-renders-counter
+
+```yaml
+id: page-renders-counter
+description: The page displays the required static content.
+validates:
+  - render-counter-static-value
+```
+
+The page must display:
 
 ```text
 Счетчик
 1
-```
-
-## Check 5: No extra implementation areas
-
-The generated project must not include:
-
-```text
-backend
-admin frontend
-database
-ETL
-auth service
 ```

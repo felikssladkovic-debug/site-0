@@ -1,382 +1,200 @@
 ---
 id: method.ontology.project-evo-method-schema
-type: method-ontology-schema
+type: method-schema
 status: active
-scope: project-evo-method-minimal
-version: 0.1.0
+scope: reusable-method
 ---
 
 # Project Evo Method Schema
 
-This document defines the minimal method-level ontology schema used by the `site-0` case.
+This document defines the reusable ontology schema for the minimal slice of `project-evo-method` used by `site-0`.
 
-It describes entity types, relation types, and validation expectations that can be reused by concrete project instances.
+It defines entity types, relation types, and structural constraints.
 
-This schema intentionally contains no `site-0`-specific technology choices, UI text, service names, or generated file paths except when used as examples.
+It must not contain project-specific values such as `site-0`, `site-front`, `orchestrator`, Vue, Vite, Tailwind, Docker Compose, or concrete UI text.
 
----
-
-# 1. Purpose
-
-The schema separates the reusable project-evo-method model from a concrete project instance.
-
-The method schema answers:
-
-```text
-What kinds of things may exist in a project-evo project?
-How may they be connected?
-What minimal structural constraints should an instance satisfy?
-```
-
-A project instance answers:
-
-```text
-Which concrete project, impl-areas, commands, specs, artifacts, and checks exist now?
-```
-
----
-
-# 2. Entity Types
-
-## 2.1 Project
-
-A `Project` is the root unit of work managed by project-evo-method.
-
-Required properties:
+## 1. Entity Types
 
 ```yaml
-Project:
-  id: string
-  name: string
-  purpose: string
+entity_types:
+  - Project
+  - Method
+  - Rule
+  - CommandSchema
+  - CommandInstance
+  - Spec
+  - SpecFile
+  - ImplementationArea
+  - Artifact
+  - GeneratedCode
+  - AcceptanceCheck
+  - Behavior
+  - State
+  - Transition
 ```
 
----
+## 2. Entity Type Definitions
 
-## 2.2 Method
+### Project
 
-A `Method` is a set of rules, commands, ontology schema, and workflow constraints used to evolve a project.
+A `Project` is the root unit of work managed by the method.
 
-Required properties:
+### Method
 
-```yaml
-Method:
-  id: string
-  scope: string
-```
+A `Method` is a reusable system of ontology, rules, and command schemas.
 
----
+### Rule
 
-## 2.3 Rule
+A `Rule` is a reusable constraint that governs artifacts, commands, implementation areas, generated code, or validation.
 
-A `Rule` is a constraint that governs interpretation, transformation, or validation of project artifacts.
+### CommandSchema
 
-Required properties:
+A `CommandSchema` is a reusable command contract. It defines expected inputs, outputs, and behavior, but does not contain project-specific instructions.
 
-```yaml
-Rule:
-  id: string
-  path: string
-```
+### CommandInstance
 
----
+A `CommandInstance` is a concrete command applied to a specific project. It references a `CommandSchema` and supplies project-specific context and constraints.
 
-## 2.4 Command
+### Spec
 
-A `Command` is an executable instruction for an LLM/code agent.
+A `Spec` is a source-of-truth artifact set that describes the desired project behavior, structure, implementation areas, runtime, and acceptance checks.
 
-Required properties:
+### SpecFile
 
-```yaml
-Command:
-  id: string
-  path: string
-  input: string
-  output: string
-```
+A `SpecFile` is one file inside a `Spec`.
 
----
+### ImplementationArea
 
-## 2.5 Spec
+An `ImplementationArea` is a bounded part of the generated system that owns a coherent set of artifacts.
 
-A `Spec` is a source-of-truth artifact set describing what should be produced.
+Implementation areas may be application-level or infrastructure-level.
 
-Required properties:
+### Artifact
 
-```yaml
-Spec:
-  id: string
-  root: string
-```
+An `Artifact` is a file or directory that is produced, owned, validated, or consumed.
 
----
+### GeneratedCode
 
-## 2.6 SpecFile
+`GeneratedCode` is the output artifact set produced from specs by a command instance.
 
-A `SpecFile` is one file inside the spec set.
+### AcceptanceCheck
 
-Required properties:
+An `AcceptanceCheck` is a validation condition for generated artifacts and behavior.
 
-```yaml
-SpecFile:
-  id: string
-  path: string
-  role: string
-```
+### Behavior
 
----
+A `Behavior` is an observable property of the generated system.
 
-## 2.7 ImplementationArea
+### State
 
-An `ImplementationArea` is a bounded part of the system that owns a coherent set of implementation artifacts.
+A `State` is a named point in the workflow lifecycle.
 
-An implementation area may be application-level or infrastructure-level.
+### Transition
 
-Required properties:
+A `Transition` is a permitted movement from one state to another.
 
-```yaml
-ImplementationArea:
-  id: string
-  kind: application | infrastructure
-  responsibility: string
-```
-
----
-
-## 2.8 Artifact
-
-An `Artifact` is a concrete file, directory, or generated output owned by an implementation area.
-
-Required properties:
-
-```yaml
-Artifact:
-  id: string
-  path: string
-  generated: boolean
-```
-
----
-
-## 2.9 GeneratedCode
-
-`GeneratedCode` is the output artifact set produced by a command.
-
-Required properties:
-
-```yaml
-GeneratedCode:
-  id: string
-  root: string
-  produced_by: Command
-```
-
----
-
-## 2.10 Behavior
-
-A `Behavior` is an observable behavior that generated code must provide.
-
-Required properties:
-
-```yaml
-Behavior:
-  id: string
-  description: string
-```
-
----
-
-## 2.11 AcceptanceCheck
-
-An `AcceptanceCheck` is a validation condition used to decide whether generated artifacts satisfy the spec.
-
-Required properties:
-
-```yaml
-AcceptanceCheck:
-  id: string
-  description: string
-  validates: Artifact | Behavior | ImplementationArea | GeneratedCode
-```
-
----
-
-## 2.12 State
-
-A `State` is a named point in a project workflow.
-
-Required properties:
-
-```yaml
-State:
-  id: string
-  meaning: string
-```
-
----
-
-## 2.13 Transition
-
-A `Transition` is an allowed movement between workflow states.
-
-Required properties:
-
-```yaml
-Transition:
-  id: string
-  from: State
-  to: State
-  triggered_by: Command | condition
-```
-
----
-
-# 3. Relation Types
-
-The following relation types are allowed in the minimal schema.
+## 3. Relation Types
 
 ```yaml
 relation_types:
-  - predicate: uses_method
-    subject_type: Project
+  - subject_type: Project
+    predicate: uses_method
     object_type: Method
 
-  - predicate: defines_rule
-    subject_type: Method
+  - subject_type: Method
+    predicate: defines_rule
     object_type: Rule
 
-  - predicate: defines_command
-    subject_type: Method
-    object_type: Command
+  - subject_type: Method
+    predicate: defines_command_schema
+    object_type: CommandSchema
 
-  - predicate: defines_schema
-    subject_type: Method
-    object_type: method-ontology-schema
-
-  - predicate: has_spec
-    subject_type: Project
+  - subject_type: Project
+    predicate: has_spec
     object_type: Spec
 
-  - predicate: contains_spec_file
-    subject_type: Spec
+  - subject_type: Spec
+    predicate: contains
     object_type: SpecFile
 
-  - predicate: has_impl_area
-    subject_type: Project
+  - subject_type: Project
+    predicate: has_impl_area
     object_type: ImplementationArea
 
-  - predicate: owns
-    subject_type: ImplementationArea
+  - subject_type: ImplementationArea
+    predicate: owns
     object_type: Artifact
 
-  - predicate: reads
-    subject_type: Command
+  - subject_type: ImplementationArea
+    predicate: depends_on
+    object_type: ImplementationArea
+
+  - subject_type: CommandInstance
+    predicate: instantiates
+    object_type: CommandSchema
+
+  - subject_type: CommandInstance
+    predicate: reads
     object_type: Spec
 
-  - predicate: follows_rule
-    subject_type: Command
+  - subject_type: CommandInstance
+    predicate: follows_rule
     object_type: Rule
 
-  - predicate: generates
-    subject_type: Command
+  - subject_type: CommandInstance
+    predicate: generates
     object_type: GeneratedCode
 
-  - predicate: includes_artifact
-    subject_type: GeneratedCode
+  - subject_type: GeneratedCode
+    predicate: contains
     object_type: Artifact
 
-  - predicate: provides_behavior
-    subject_type: ImplementationArea
+  - subject_type: AcceptanceCheck
+    predicate: validates
+    object_type: Artifact
+
+  - subject_type: AcceptanceCheck
+    predicate: validates
     object_type: Behavior
 
-  - predicate: validates
-    subject_type: AcceptanceCheck
-    object_type: Artifact | Behavior | ImplementationArea | GeneratedCode
+  - subject_type: Transition
+    predicate: from_state
+    object_type: State
 
-  - predicate: depends_on
-    subject_type: ImplementationArea
-    object_type: ImplementationArea
+  - subject_type: Transition
+    predicate: to_state
+    object_type: State
 
-  - predicate: runs
-    subject_type: ImplementationArea
-    object_type: ImplementationArea
-
-  - predicate: builds
-    subject_type: ImplementationArea
-    object_type: ImplementationArea
+  - subject_type: Transition
+    predicate: triggered_by
+    object_type: CommandInstance
 ```
 
----
-
-# 4. Minimal Structural Constraints
-
-A valid minimal project instance must satisfy these constraints.
+## 4. Structural Constraints
 
 ```yaml
 constraints:
   - id: project-has-method
-    rule: Every Project must use exactly one Method.
+    rule: Every Project must use exactly one Method in a minimal method application.
 
   - id: project-has-spec
-    rule: Every Project must have one Spec root.
+    rule: Every Project must have a Spec.
 
-  - id: project-has-command
-    rule: The Method must define at least one Command.
-
-  - id: command-has-input-output
-    rule: Every Command must define input and output.
+  - id: project-has-impl-area
+    rule: Every Project must have one or more ImplementationArea instances.
 
   - id: impl-area-owns-artifacts
-    rule: Every ImplementationArea must own at least one Artifact or explicitly declare that it owns no generated artifacts yet.
+    rule: Every ImplementationArea must own at least one Artifact pattern.
 
-  - id: generated-code-produced-by-command
-    rule: Every GeneratedCode root must be produced by one Command.
+  - id: artifact-owned-once
+    rule: Each generated artifact should be owned by exactly one ImplementationArea unless explicitly declared shared.
 
-  - id: generated-artifacts-owned
-    rule: Every generated Artifact must be owned by one ImplementationArea.
+  - id: command-instance-instantiates-schema
+    rule: Every CommandInstance must instantiate exactly one CommandSchema.
 
-  - id: acceptance-checks-exist
-    rule: A minimal project must define acceptance checks for build/run and primary visible behavior when applicable.
-```
+  - id: command-instance-has-output
+    rule: Every CommandInstance must generate a GeneratedCode artifact set or another explicitly declared output artifact set.
 
----
-
-# 5. Minimal Workflow Pattern
-
-The minimal workflow pattern is:
-
-```text
-spec -> code
-```
-
-Formal schema:
-
-```yaml
-workflow_pattern:
-  id: spec-to-code-flow
-  input_type: Spec
-  command_type: Command
-  output_type: GeneratedCode
-```
-
----
-
-# 6. Boundary
-
-This schema is intentionally minimal. It does not yet model:
-
-```yaml
-excluded_from_minimal_schema:
-  - idea lifecycle
-  - feature lifecycle
-  - code-to-spec validation
-  - spec-to-idea validation
-  - multiple environments
-  - deployment targets
-  - test coverage model
-  - database model
-  - API model
-  - agent roles
-  - human approval gates
+  - id: generated-code-validated
+    rule: GeneratedCode must be covered by AcceptanceCheck instances appropriate to the project scope.
 ```
