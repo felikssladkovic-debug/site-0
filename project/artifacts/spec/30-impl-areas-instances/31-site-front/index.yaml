@@ -1,0 +1,5 @@
+id: site-0.impl-areas.site-front
+impl-area: site-front
+initial-params-file: params.yaml
+ravioli-files:
+  - rvc-000-mock-text.md

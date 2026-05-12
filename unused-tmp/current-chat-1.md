@@ -817,7 +817,7 @@ must_read:
   - method/rules/spec-to-code-rule.md
   - method/rules/acceptance-check-rule.md
   - project/method-instance/rules-profile.md
-  - project/spec/10-product/site-0-brief.md
+  - project/spec/10-product/brief-000-structure.md
   - project/spec/20-architecture/implementation-areas.md
   - project/spec/30-site-front/site-front-contract.md
   - project/spec/60-quality/acceptance-checks.md
@@ -1032,7 +1032,7 @@ generated/.project-evo/spec-to-code-manifest.json
 command: spec-to-code
 project: site-0
 input_specs:
-  - project/spec/10-product/site-0-brief.md
+  - project/spec/10-product/brief-000-structure.md
   - project/spec/20-architecture/implementation-areas.md
   - project/spec/30-site-front/site-front-contract.md
   - project/spec/40-orchestrator/orchestrator-contract.md

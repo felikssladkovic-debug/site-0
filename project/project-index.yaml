@@ -1,0 +1,8 @@
+project: site-0
+version: 0.0.1
+params:
+  method: ../method/
+  instance-ontology: ./artifacts/00-meta/site-0-ontology-instance.yaml
+  commands-folder: ./method-instance/commands/
+  env-folder: ./method-instance/env/
+  generated-folder: ./generated/

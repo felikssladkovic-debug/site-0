@@ -18,7 +18,7 @@ spec_files:
     role: concrete method graph for this project
 
   - id: project.spec.site-0.brief
-    path: project/artifacts/10-product/site-0-brief.md
+    path: project/artifacts/10-product/brief-000-structure.md
     role: product brief
 
   - id: project.spec.site-0.implementation-areas

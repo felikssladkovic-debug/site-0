@@ -51,7 +51,7 @@ instances:
 
   - id: site-0-brief
     type: SpecFile
-    path: project/artifacts/10-product/site-0-brief.md
+    path: project/artifacts/10-product/brief-000-structure.md
 
   - id: implementation-areas-spec
     type: SpecFile

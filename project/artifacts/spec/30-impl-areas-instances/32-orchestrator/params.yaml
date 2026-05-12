@@ -1,0 +1,4 @@
+stack:
+  - docker compose - new edition (use "docker compose" instead of "docker-compose")
+run_with:
+  bash: docker-compose up --build

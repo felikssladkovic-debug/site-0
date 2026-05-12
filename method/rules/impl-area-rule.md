@@ -20,6 +20,7 @@ required_fields:
   - id
   - kind
   - responsibility
+  - spec-folder
   - owns
 ```
 
@@ -29,10 +30,6 @@ required_fields:
 allowed_kinds:
   - application
   - infrastructure
-  - data
-  - integration
-  - quality
-  - orchestration
 ```
 
 A minimal project may use only a subset of these kinds.
@@ -74,7 +71,7 @@ The dependency should describe the operational meaning, for example:
 
 ```yaml
 relations:
-  - from: infrastructure-area
-    to: application-area
+  - from: infrastructure-area-1
+    to: application-area-1
     relation: runs
 ```

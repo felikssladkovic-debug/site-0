@@ -1,0 +1,37 @@
+в соседнем чате "Deterministic Runner Plan 04"
+мы с тобой обсуждаем
+"план, что нам надо сделать, чтоб реализовать этот "deterministic runner + bounded LLM" и запустить его на spec для site-0"
+
+Прикладываю zip - это текущая версия site-0, в которой ведем доработки.
+ Я чуть подправил файл, поэтому нужно его сначала проверить - предупреди, если там что-то нарушено.
+ Если исправления очевидны - проведи их и дай только сводку. или спроси вопросы - уточни у меня.
+
+Сейчас интересует пункт "5. Реализовать runner"
+Для этого нужно заполнить файл "method/tools/spec-to-code.py", который сейчас пустой.
+
+Напиши код этого файла, чтоб реализовать такой pipeline:
+"
+1. load input yaml
+2. preflight
+3. load ontology yaml
+4. validate command input
+5. validate spec-index paths
+6. validate impl-area graph
+7. validate artifact ownership
+8. create generated/.project-evo/
+9. create context bundle for site-front
+10. call PROJECT_EVO_LLM_COMMAND for site-front
+11. validate generated boundaries
+12. run site-front checks
+13. repair site-front if needed
+14. write site-front manifest
+15. create context bundle for orchestrator
+16. call PROJECT_EVO_LLM_COMMAND for orchestrator
+17. validate generated boundaries
+18. run orchestrator checks
+19. repair orchestrator if needed
+20. write orchestrator manifest
+21. run final acceptance checks
+22. write final report
+"
+

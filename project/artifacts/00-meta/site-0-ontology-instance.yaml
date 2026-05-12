@@ -3,19 +3,19 @@ project: site-0
 impl_areas:
   - id: site-front
     kind: application
+    responsibility: UI, web-application
+    spec-folder: artifacts/spec/30-impl-areas-instances/31-site-front
     owns:
       - generated/site-front/**
 
   - id: orchestrator
     kind: infrastructure
+    responsibility: builds and runs final application
+    spec-folder: artifacts/spec/30-impl-areas-instances/32-orchestrator
     owns:
       - generated/docker-compose.yaml
 
 relations:
-  - from: orchestrator
-    to: site-front
-    relation: depends_on
-
   - from: orchestrator
     to: site-front
     relation: builds
@@ -23,8 +23,3 @@ relations:
   - from: orchestrator
     to: site-front
     relation: runs
-
-acceptance_checks:
-  - app-builds
-  - app-runs
-  - page-renders-counter
