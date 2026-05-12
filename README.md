@@ -13,7 +13,7 @@ It separates:
 
 1. reusable method-level definitions under `method/`
 2. project-specific method application under `project/method-instance/`
-3. project-specific specs under `project/spec/`
+3. project-specific artifacts under `project/artifacts/`
 4. generated code output target under `generated/`
 
 The package intentionally contains only the concepts needed for the minimal `site-0` project.

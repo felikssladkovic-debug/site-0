@@ -26,18 +26,18 @@ method/command-schemas/spec-to-code-command-schema.md
 
 ```text
 project/method-instance/rules-profile.md
-project/spec/00-meta/site-0-ontology-instance.md
+project/artifacts/00-meta/site-0-ontology-instance.md
 ```
 
 ## Read these project spec files
 
 ```text
-project/spec/00-meta/spec-index.md
-project/spec/10-product/site-0-brief.md
-project/spec/20-architecture/implementation-areas.md
-project/spec/30-site-front/site-front-contract.md
-project/spec/40-orchestrator/orchestrator-contract.md
-project/spec/60-quality/acceptance-checks.md
+project/artifacts/00-meta/spec-index.md
+project/artifacts/10-product/site-0-brief.md
+project/artifacts/views/implementation-areas.view.md
+project/artifacts/spec/30-impl-areas-instances/31-site-front/site-front-contract.md
+project/artifacts/spec/30-impl-areas-instances/32-orchestrator/orchestrator-contract.md
+project/artifacts/spec/60-quality/acceptance-checks.md
 ```
 
 ## Generate output

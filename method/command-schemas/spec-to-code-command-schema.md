@@ -13,6 +13,11 @@ It defines the generic command contract.
 
 It must not include concrete project values.
 
+# question:
+можно ли оформить эту команду как четкий алгоритм?
+Например, так:
+1. Определить очередность сборки-компиляции - какая impl-area за какой.
+
 ## Command schema
 
 ```yaml

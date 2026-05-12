@@ -128,10 +128,12 @@ relation_types:
   - subject_type: ImplementationArea
     predicate: depends_on
     object_type: ImplementationArea
+    question: приведи пример, когда этот connection?
 
   - subject_type: CommandInstance
     predicate: instantiates
     object_type: CommandSchema
+    question: нужно точнее описать механизм для команд - что именно в method/command-schema, а что в project/method-instance/commands - класс+экземпляр(как Java), или prototype+addon(как JavaScript) 
 
   - subject_type: CommandInstance
     predicate: reads
@@ -152,11 +154,13 @@ relation_types:
   - subject_type: AcceptanceCheck
     predicate: validates
     object_type: Artifact
-
+    question: нужно уточнить, что такое AcceptanceCheck - это набор правил валидации(данные для валидатора), или это экземпляр кода, который выполняет валидацию 
+      
   - subject_type: AcceptanceCheck
     predicate: validates
     object_type: Behavior
-
+    question: как будто это разные AcceptanceCheck - для Artifact и для Behavior. Хотя, смысл/назначения - про одно, это проверка валидности. Как обычно в таких случаях делают - разделяют или нет?  
+    
   - subject_type: Transition
     predicate: from_state
     object_type: State

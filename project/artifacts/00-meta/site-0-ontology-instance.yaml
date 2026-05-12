@@ -1,0 +1,30 @@
+project: site-0
+
+impl_areas:
+  - id: site-front
+    kind: application
+    owns:
+      - generated/site-front/**
+
+  - id: orchestrator
+    kind: infrastructure
+    owns:
+      - generated/docker-compose.yaml
+
+relations:
+  - from: orchestrator
+    to: site-front
+    relation: depends_on
+
+  - from: orchestrator
+    to: site-front
+    relation: builds
+
+  - from: orchestrator
+    to: site-front
+    relation: runs
+
+acceptance_checks:
+  - app-builds
+  - app-runs
+  - page-renders-counter

@@ -43,31 +43,31 @@ instances:
 
   - id: project-spec
     type: Spec
-    path: project/spec/**
+    path: project/artifacts/spec/**
 
   - id: spec-index
     type: SpecFile
-    path: project/spec/00-meta/spec-index.md
+    path: project/artifacts/00-meta/spec-index.md
 
   - id: site-0-brief
     type: SpecFile
-    path: project/spec/10-product/site-0-brief.md
+    path: project/artifacts/10-product/site-0-brief.md
 
   - id: implementation-areas-spec
     type: SpecFile
-    path: project/spec/20-architecture/implementation-areas.md
+    path: project/views/implementation-areas.view.md
 
   - id: site-front-contract
     type: SpecFile
-    path: project/spec/30-site-front/site-front-contract.md
+    path: project/artifacts/spec/30-impl-areas-instances/31-site-front/site-front-contract.md
 
   - id: orchestrator-contract
     type: SpecFile
-    path: project/spec/40-orchestrator/orchestrator-contract.md
+    path: project/artifacts/spec/30-impl-areas-instances/32-orchestrator/orchestrator-contract.md
 
   - id: acceptance-checks-spec
     type: SpecFile
-    path: project/spec/60-quality/acceptance-checks.md
+    path: project/artifacts/spec/60-quality/acceptance-checks.md
 
   - id: site-front
     type: ImplementationArea

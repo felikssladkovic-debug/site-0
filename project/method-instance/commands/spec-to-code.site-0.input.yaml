@@ -1,0 +1,41 @@
+command: spec-to-code
+project: site-0
+output_root: generated/
+
+method_files:
+  - method/ontology/project-evo-method-schema.md
+  - method/rules/impl-area-rule.md
+  - method/rules/spec-to-code-rule.md
+  - method/rules/acceptance-check-rule.md
+  - method/command-schemas/spec-to-code-command-schema.md
+
+project_files:
+  rules_profile: project/method-instance/rules-profile.md
+  spec_index: project/artifacts/00-meta/spec-index.md
+  ontology_instance_md: project/artifacts/00-meta/site-0-ontology-instance.md
+  ontology_instance_yaml: project/artifacts/00-meta/site-0-ontology-instance.yaml
+
+allowed_impl_areas:
+  - site-front
+  - orchestrator
+
+artifact_ownership:
+  site-front:
+    - generated/site-front/**
+  orchestrator:
+    - generated/docker-compose.yaml
+
+generation_order:
+  - site-front
+  - orchestrator
+
+validation_order:
+  - site-front
+  - orchestrator
+  - final-acceptance
+
+repair:
+  max_attempts: 3
+
+llm:
+  command_env: PROJECT_EVO_LLM_COMMAND
