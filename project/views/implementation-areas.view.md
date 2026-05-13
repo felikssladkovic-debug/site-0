@@ -1,6 +1,6 @@
 ---
-id: project.spec.site-0.implementation-areas
-type: architecture-spec
+id: project.site-0.views.implementation-areas
+type: view
 status: active
 scope: site-0
 ---

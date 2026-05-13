@@ -1,4 +1,4 @@
-id: site-0.impl-areas.orchestarator
+id: site-0.impl-areas.orchestrator
 impl-area: orchestrator
 initial-params-file: params.yaml
 ravioli-files:

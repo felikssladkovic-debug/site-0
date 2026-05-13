@@ -3,7 +3,7 @@ id: project.spec.site-0.orchestrator.rv-001-mock-text
 type: ravioli
 status: active
 scope: site-0
-impl_area: site-front
+impl_area: orchestrator
 ---
 
 # File purpose

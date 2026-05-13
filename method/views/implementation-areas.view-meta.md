@@ -1,7 +1,7 @@
 ---
-id: method.reports.implementation-areas
-type: report-meta
-report_name: implementation-areas.report.md
+id: method.views.implementation-areas
+type: view-meta
+report_name: implementation-areas.view.md
 ---
 
 # Implementation Areas Report Meta

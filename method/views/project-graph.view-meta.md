@@ -1,3 +1,9 @@
+---
+id: method.views.project-graph
+type: view-meta
+report_name: project-graph.view.md
+---
+
 # Project Graph View Meta
 
 ## Purpose
