@@ -66,6 +66,7 @@ Environment:
 EOF
 }
 
+
 run_check_document_metadata_header() {
   python3 "$ROOT_DIR/meta/tools/check-document-metadata-header.py" \
     --method-dir "$ROOT_DIR/method"
