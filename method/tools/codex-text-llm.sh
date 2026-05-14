@@ -3,8 +3,9 @@ set -euo pipefail
 
 PROMPT="$(cat)"
 
-codex exec \
+codex \
   --sandbox read-only \
   --ask-for-approval never \
   --skip-git-repo-check \
+  exec \
   - <<< "$PROMPT"
