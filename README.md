@@ -1,86 +1,140 @@
----
-id: readme.site-0-project-evo-spec-method-instance
-type: readme
-status: active
-scope: site-0
----
+# project-evo-method v0 / site-0
 
-# site-0 project-evo spec package
+This repository is a minimal executable slice of `project-evo-method`.
 
-This package is a minimal `project-evo-method` application for the `site-0` case.
-
-It separates:
-
-1. reusable method-level definitions under `method/`
-2. project-specific method application under `project/method-instance/`
-3. project-specific artifacts under `project/artifacts/`
-4. generated code output target under `generated/`
-
-The package intentionally contains only the concepts needed for the minimal `site-0` project.
-
-## Case summary
-
-`site-0` is a minimal frontend-only web application.
-
-It must:
-
-- use TypeScript
-- use Vue 3
-- use Tailwind
-- use Vite
-- run through Docker Compose
-- display the text `Счетчик`
-- display the static number `1`
-
-The project has exactly two implementation areas:
-
-- `site-front` — application implementation area
-- `orchestrator` — infrastructure implementation area that owns Docker Compose runtime artifacts
-
-## Main command to execute
-
-Run the project-specific command:
+The goal of this version is to validate the vertical chain:
 
 ```text
-project/method-instance/commands/spec-to-code.site-0.md
+/meta checks /method
+/method executes a method action
+/project--site-0 provides project input/state
+/project--site-0/generated receives generated runnable code
 ```
 
-This command applies the reusable method-level `spec-to-code` command schema to this concrete `site-0` project instance.
+`project-evo-method` is treated here as an executable method environment.
 
-## Expected generated output
+A human uses it through predefined commands and project files. The method reads project state, performs deterministic or LLM-assisted actions, writes artifacts, and validates the result.
 
-The code generation agent must create output under:
+In this v0 skeleton, the only supported application project is:
 
 ```text
-generated/
+project--site-0
 ```
 
-Expected generated structure:
-
-```text
-generated/
-  site-front/
-    package.json
-    index.html
-    vite.config.ts
-    tsconfig.json
-    tailwind.config.*
-    postcss.config.*
-    src/**
-    Dockerfile
-  docker-compose.yaml
-```
-
-## Runtime command
+The single entry point for user-facing commands is:
 
 ```bash
-docker-compose up --build
+./evo.sh
 ```
 
-## Acceptance checks
+## Commands
 
-The generated project is accepted when:
+Show help:
 
-1. Docker Compose build succeeds.
-2. Docker Compose starts the frontend service.
-3. The page displays `Счетчик` and `1`.
+```bash
+./evo.sh help
+```
+
+Check metadata headers in `/method`:
+
+```bash
+./evo.sh check-document-metadata-header
+```
+
+Run tests for the metadata-header checker:
+
+```bash
+./evo.sh test check-document-metadata-header
+```
+
+Generate runnable code for `project--site-0` from its single spec document:
+
+```bash
+./evo.sh spec-to-code
+```
+
+Run tests for `spec-to-code`:
+
+```bash
+./evo.sh test spec-to-code
+```
+
+Run all tests:
+
+```bash
+./evo.sh test
+```
+
+## Directory roles
+
+```text
+/meta
+```
+
+Layer-0 tools and rules.
+
+`/meta` checks the structure of `/method`. At v0, it only checks document metadata headers in method documents.
+
+Files in `/meta` are not required to follow the method document metadata-header rule.
+
+```text
+/method
+```
+
+Layer-1 implementation of `project-evo-method`.
+
+It contains executable tools and method documents. At v0, there is one method action:
+
+```text
+method/tools/spec-to-code.py
+```
+
+```text
+/project--site-0
+```
+
+Concrete application project workspace managed by the method.
+
+At v0, it contains:
+
+```text
+project--site-0/spec/index.md
+project--site-0/generated/
+```
+
+The generated runnable application code is the main practical output for the human, but inside `project-evo-method` it is treated as a generated artifact of a method action.
+
+## v0 constraints
+
+At this stage:
+
+- document metadata headers are required only for method documents in `/method`
+- project documents are not required to have metadata headers
+- `spec-to-code` reads exactly one project spec document
+- `project--site-0` is the default project
+- no impl-area graph is used
+- no project ontology is used
+- no ownership graph is used
+- no repair loop is used
+- generated code is intentionally minimal
+
+## Expected result
+
+After running:
+
+```bash
+./evo.sh spec-to-code
+```
+
+the generated folder should contain a minimal static site:
+
+```text
+project--site-0/generated/index.html
+```
+
+You can open that file in a browser. It should display:
+
+```text
+Счетчик
+1
+```
