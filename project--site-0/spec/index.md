@@ -4,33 +4,39 @@
 
 Generate the smallest possible runnable website from a single project spec.
 
-## Required UI
+## Required UI behavior
 
-The generated page MUST display:
+The generated application must show a simple page with:
 
 ```text
 Счетчик
 1
 ```
 
-## Generation parameters
+The number `1` is static.
 
-title: Счетчик
-value: 1
+There is no real counter behavior yet.
 
-## Output
+## Not required
 
-The generated code MUST be written into:
+Do not implement:
 
-```text
-project--site-0/generated/
-```
+- mutable counter logic
+- increment button
+- decrement button
+- mutable state
+- API calls
+- routing
+- i18n
+- persistence
 
-At v0, the expected generated artifact is:
+It is expected project must not include:
 
-```text
-project--site-0/generated/index.html
-```
+- backend
+- database
+- authentication
+- authorization
+- admin UI
 
 ## Runtime
 

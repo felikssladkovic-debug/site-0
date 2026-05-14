@@ -2,18 +2,44 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$ROOT_DIR/project--site-0"
+
+ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --project-dir)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --project-dir requires a value" >&2
+        exit 2
+      fi
+      PROJECT_DIR="$(cd "$2" && pwd)"
+      shift 2
+      ;;
+    *)
+      ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+set -- "${ARGS[@]}"
 
 show_help() {
-  cat <<'HELP'
+  cat <<EOF
 project-evo-method v0
 
 Usage:
-  ./evo.sh help
-  ./evo.sh check-document-metadata-header
+  ./evo-root.sh help
+  ./evo-root.sh check-document-metadata-header
+  ./evo-root.sh spec-to-code [--project-dir <project-dir>]
+  ./evo-root.sh test
+  ./evo-root.sh test check-document-metadata-header
+  ./evo-root.sh test spec-to-code
+
+Project-local usage:
+  cd project--site-0
   ./evo.sh spec-to-code
-  ./evo.sh test
-  ./evo.sh test check-document-metadata-header
-  ./evo.sh test spec-to-code
 
 Commands:
   help
@@ -23,15 +49,21 @@ Commands:
       Validate that method documents in /method have valid v1 metadata headers.
 
   spec-to-code
-      Generate code for the default project workspace: project--site-0.
+      Generate code for the selected project workspace.
 
   test
       Run all tests, or tests for one tool.
 
-Notes:
-  - v0 assumes project--site-0 as the default project.
-  - All user-facing commands should go through evo.sh.
-HELP
+Options:
+  --project-dir <project-dir>
+      Project workspace directory.
+      Defaults to: project--site-0
+
+Environment:
+  PROJECT_EVO_LLM_COMMAND
+      Command used by spec-to-code.py as text-only LLM executor.
+      It must read prompt from stdin and write project-evo-file blocks to stdout.
+EOF
 }
 
 run_check_document_metadata_header() {
@@ -41,7 +73,7 @@ run_check_document_metadata_header() {
 
 run_spec_to_code() {
   python3 "$ROOT_DIR/method/tools/spec-to-code.py" \
-    --project-dir "$ROOT_DIR/project--site-0"
+    --project-dir "$PROJECT_DIR"
 }
 
 run_test_check_document_metadata_header() {
@@ -52,6 +84,9 @@ run_test_check_document_metadata_header() {
 
 run_test_spec_to_code() {
   python3 "$ROOT_DIR/method/tests/spec-to-code/test-1-fails-if-no-project.py"
+  python3 "$ROOT_DIR/method/tests/spec-to-code/test-2-fails-if-no-llm-command.py"
+  python3 "$ROOT_DIR/method/tests/spec-to-code/test-3-applies-create-file-block.py"
+  python3 "$ROOT_DIR/method/tests/spec-to-code/test-4-rejects-path-traversal.py"
 }
 
 run_all_tests() {
@@ -81,14 +116,14 @@ case "${1:-help}" in
         run_test_spec_to_code
         ;;
       *)
-        echo "Unknown test target: $2" >&2
+        echo "ERROR: unknown test target: $2" >&2
         show_help
         exit 2
         ;;
     esac
     ;;
   *)
-    echo "Unknown command: $1" >&2
+    echo "ERROR: unknown command: $1" >&2
     show_help
     exit 2
     ;;

@@ -24,7 +24,7 @@ project--site-0
 The single entry point for user-facing commands is:
 
 ```bash
-./evo.sh
+./evo-root.sh
 ```
 
 ## Commands
@@ -32,37 +32,37 @@ The single entry point for user-facing commands is:
 Show help:
 
 ```bash
-./evo.sh help
+./evo-root.sh help
 ```
 
 Check metadata headers in `/method`:
 
 ```bash
-./evo.sh check-document-metadata-header
+./evo-root.sh check-document-metadata-header
 ```
 
 Run tests for the metadata-header checker:
 
 ```bash
-./evo.sh test check-document-metadata-header
+./evo-root.sh test check-document-metadata-header
 ```
 
 Generate runnable code for `project--site-0` from its single spec document:
 
 ```bash
-./evo.sh spec-to-code
+./evo-root.sh spec-to-code
 ```
 
 Run tests for `spec-to-code`:
 
 ```bash
-./evo.sh test spec-to-code
+./evo-root.sh test spec-to-code
 ```
 
 Run all tests:
 
 ```bash
-./evo.sh test
+./evo-root.sh test
 ```
 
 ## Directory roles
@@ -123,7 +123,7 @@ At this stage:
 After running:
 
 ```bash
-./evo.sh spec-to-code
+./evo-root.sh spec-to-code
 ```
 
 the generated folder should contain a minimal static site:
