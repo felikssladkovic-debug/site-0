@@ -1,6 +1,8 @@
-# project-evo-method v0 / site-0
+# project-evo-method foundation-00-minimal / site-0
 
 This repository is a minimal executable slice of `project-evo-method`.
+
+Foundation version: `foundation-00-minimal`.
 
 The goal of this version is to validate the vertical chain:
 
@@ -65,7 +67,40 @@ Run all tests:
 ./evo-root.sh test
 ```
 
+Run the full minimal smoke check:
+
+```bash
+bash ./evo-root.sh smoke
+```
+
+How the smoke command works:
+- the smoke command performs the checks in a managed run workspace, not in the original project tree:
+
+```text
+- create .project-evo/runs/<run-id>/
+- copy the repository into .project-evo/runs/<run-id>/workspace/
+- check-document-metadata-header inside the workspace
+- test inside the workspace
+- spec-to-code through method/tools/fake-llm.py inside the workspace
+- verify that project--site-0/generated/index.html exists inside the workspace
+- delete the workspace on success
+- keep the workspace on failure for inspection
+- keep run.yaml and logs/smoke.log as the run journal
+```
+
+For debugging, keep the workspace even after a successful smoke run:
+
+```bash
+bash ./evo-root.sh smoke --keep-workspace
+```
+
 ## Directory roles
+
+```text
+/.project-evo
+```
+
+Runtime bookkeeping for method command runs. At v0, `smoke` writes run journals under `.project-evo/runs/<run-id>/`. Successful runs keep only `run.yaml` and `logs/smoke.log`; failed runs also keep the copied `workspace/` for debugging.
 
 ```text
 /meta
@@ -104,9 +139,9 @@ project--site-0/generated/
 
 The generated runnable application code is the main practical output for the human, but inside `project-evo-method` it is treated as a generated artifact of a method action.
 
-## v0 constraints
+## Known limitations
 
-At this stage:
+This foundation is intentionally minimal. Known limitations:
 
 - document metadata headers are required only for method documents in `/method`
 - project documents are not required to have metadata headers
@@ -117,6 +152,7 @@ At this stage:
 - no ownership graph is used
 - no repair loop is used
 - generated code is intentionally minimal
+- smoke still writes a run journal under `.project-evo/runs/`; generated project changes happen only inside the managed workspace
 
 ## Expected result
 
