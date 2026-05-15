@@ -64,7 +64,11 @@ while [[ $# -gt 0 ]]; do
       PROJECT_DIR="$(cd "$2" && pwd)"
       shift 2
       ;;
-    *)
+    chmod)
+  exec "$SCRIPT_DIR/evo-method/chmod.sh" "$@"
+  ;;
+
+*)
       ARGS+=("$1")
       shift
       ;;
