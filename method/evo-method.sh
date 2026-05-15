@@ -12,6 +12,7 @@ project-evo-method foundation-00-minimal
 Usage:
   ./evo-method.sh help
   ./evo-method.sh init [--name <project-name>]
+  ./evo-method.sh chmod
   ./evo-method.sh check-document-metadata-header
   ./evo-method.sh spec-to-code [--project-dir <project-dir>]
   ./evo-method.sh smoke [--keep-workspace]
@@ -26,6 +27,9 @@ Project-local usage:
 Commands:
   init
       Initialize an application project in the current directory.
+
+  chmod
+      Add executable bit to all *.sh files in /method and /meta.
 
   check-document-metadata-header
       Validate that method documents in /method have valid v1 metadata headers.
@@ -64,11 +68,7 @@ while [[ $# -gt 0 ]]; do
       PROJECT_DIR="$(cd "$2" && pwd)"
       shift 2
       ;;
-    chmod)
-  exec "$SCRIPT_DIR/evo-method/chmod.sh" "$@"
-  ;;
-
-*)
+    *)
       ARGS+=("$1")
       shift
       ;;
@@ -83,6 +83,14 @@ case "${1:-help}" in
   init)
     shift || true
     exec "$METHOD_DIR/evo-method/init.sh" "$@"
+    ;;
+  chmod)
+    shift || true
+    if [[ $# -ne 0 ]]; then
+      echo "ERROR: chmod command does not accept parameters" >&2
+      exit 2
+    fi
+    exec "$METHOD_DIR/evo-method/chmod.sh"
     ;;
   check-document-metadata-header)
     exec "$METHOD_DIR/evo-method/check-document-metadata-header.sh"
