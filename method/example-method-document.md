@@ -12,7 +12,7 @@ This file is intentionally simple.
 It exists to provide a minimal method document that can be validated by:
 
 ```bash
-./evo-root.sh check-document-metadata-header
+./method/evo-method.sh check-document-metadata-header
 ```
 
 It has no functional role in `spec-to-code`.
